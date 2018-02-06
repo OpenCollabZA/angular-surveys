@@ -2,11 +2,15 @@
     <div class="mw-form-question-builder" ng-class="{'ng-submitted':ctrl.formSubmitted}">
         <div ng-form="ctrl.form" ng-if="!ctrl.isPreview">
             <div class="form-horizontal">
-                <div class="form-group">
+                <div class="form-group" ng-repeat="lang in ctrl.formObject.languages">
 
-                    <mw-label label-for="question-text-{{ctrl.id}}" label-class="col-sm-2 control-label"  label-key="mwForm.question.text"></mw-label>
+                    <div class="col-sm-2 language-label">
+                        <mw-label label-for="question-text-{{ctrl.id}}-{{lang}}" label-class=" control-label"  label-key="mwForm.question.text"></mw-label>
+                        <br>
+                        <small>({{'mwForm.languages.' + lang | translate}}}</small>
+                    </div>
                     <div class="col-sm-10 col-md-8">
-                        <input type="text" class="form-control" name="text" ng-attr-id="question-text-{{ctrl.id}}" ng-model="ctrl.question.text" ng-readonly="ctrl.readOnly" required>
+                        <input type="text" class="form-control" name="text" ng-attr-id="question-text-{{ctrl.id}}-{{lang}}" ng-model="ctrl.question.text[lang]" ng-readonly="ctrl.readOnly" required>
                     </div>
                 </div>
                 <div class="form-group mw-question-type">
@@ -48,7 +52,7 @@
                         <mw-question-offered-answer-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-offered-answer-list-builder>
                     </div>
                     <div ng-switch-when="priority">
-                        <mw-question-priority-list-builder question="ctrl.question" read-only="ctrl.readOnly"></mw-question-priority-list-builder>
+                        <mw-question-priority-list-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-priority-list-builder>
                     </div>
                     <div ng-switch-when="number" class="form-inline">
                         <div class="range-config form-inline">
@@ -109,7 +113,7 @@
         </div>
         <div class="mw-preview" ng-if="ctrl.isPreview">
             <div class="mw-question-text">
-                {{ctrl.question.text}} <span ng-if="ctrl.question.required">*</span>
+                {{ctrl.question.text[ctrl.formObject.languages[0]]}} <span ng-if="ctrl.question.required">*</span>
             </div>
             <div class="question-answers" ng-switch="ctrl.question.type">
                 <div ng-switch-when="text">
@@ -145,7 +149,7 @@
                     <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
                         <label>
                             <input type="radio">
-                            {{answer.value}}
+                            {{answer.value[ctrl.formObject.languages[0]]}}
                         </label>
                     </div>
                     <div class="radio" ng-if="ctrl.question.otherAnswer">
@@ -160,7 +164,7 @@
                     <div class="checkbox" ng-repeat="answer in ctrl.question.offeredAnswers">
                         <label>
                             <input type="checkbox">
-                            {{answer.value}}
+                            {{answer.value[ctrl.formObject.languages[0]]}}
                         </label>
                     </div>
                     <div class="checkbox" ng-if="ctrl.question.otherAnswer">
@@ -173,7 +177,7 @@
                 </div>
                 <div ng-switch-when="select">
                     <select   class="form-control" ng-disabled="true">
-                        <option ng-repeat="answer in ctrl.question.offeredAnswers">{{answer.value}}</option>
+                        <option ng-repeat="answer in ctrl.question.offeredAnswers">{{answer.value[ctrl.formObject.languages[0]]}}</option>
                     </select>
                 </div>
 
@@ -184,7 +188,7 @@
                             <tr>
                                 <td></td>
                                 <td ng-repeat="col in ctrl.question.grid.cols">
-                                    <label>{{col.label}}</label>
+                                    <label>{{col.label[ctrl.formObject.languages[0]]}}</label>
                                 </td>
                             </tr>
 
@@ -192,7 +196,7 @@
                             <tbody>
                             <tr ng-repeat="row in ctrl.question.grid.rows">
                                 <td>
-                                    {{row.label}}
+                                    {{row.label[ctrl.formObject.languages[0]]}}
                                 </td>
                                 <td ng-repeat="col in ctrl.question.grid.cols"  ng-switch="ctrl.question.grid.cellInputType">
                                     <input ng-switch-when="radio"  type="radio" disabled>
@@ -221,7 +225,7 @@
 
                             <td class="mw-available-items">
                                 <div class="mw-item" ng-repeat="item in ctrl.question.priorityList">
-                                    {{::item.value}}
+                                    {{::item.value[ctrl.formObject.languages[0]]}}
                                 </div>
                             </td>
                         </tr>
@@ -232,7 +236,7 @@
                     <div class="form-inline" style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList">
                         <div class="form-group">
                             <label>
-                                {{item.value}}
+                                {{item.value[ctrl.formObject.languages[0]]}}
                             </label>
                             <input type="number" class="form-control" style="width: 80px" >
                             <span>{{ctrl.question.unit}}</span>

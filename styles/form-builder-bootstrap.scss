@@ -4,6 +4,15 @@
 
 
 .mw-form-builder{
-
+	.language-label{
+	  label {
+		width: 100%
+	  }
+	  small {
+		display: inline-block;
+		text-align: right;
+		width: 100%;
+	  }
+	}
 }
 

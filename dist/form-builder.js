@@ -96,6 +96,7 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
         scope: {
             question: '=',
             readOnly: '=?',
+			formObject: '=',
             options: '=?'
         },
         templateUrl: 'mw-question-priority-list-builder.html',
@@ -130,7 +131,7 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
                 var item = {
                     id: mwFormUuid.get(),
                     orderNo: ctrl.question.priorityList.length + 1,
-                    value: null
+                    value: {}
                 };
                 if(!noFocus){
                     ctrl.isNewItem[item.id]=true;
@@ -252,7 +253,7 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
                 var answer = {
                     id: mwFormUuid.get(),
                     orderNo: ctrl.question.offeredAnswers.length + 1,
-                    value: null,
+                    value: {},
                     pageFlow:defaultPageFlow
                 };
                 ctrl.isNewAnswer[answer.id]=true;
@@ -1213,6 +1214,9 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
 
                 ctrl.options = mwFormBuilderOptions.$init(ctrl.options);
 
+                //  Set the default language for the survey
+				// ctrl.formData.languages = [ctrl.options.surveyLanguage];
+
                 if(ctrl.api){
                     ctrl.api.reset = function(){
                         for (var prop in ctrl.formData) {
@@ -1227,7 +1231,25 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
                     }
                 }
             };
-            
+
+
+			/**
+             * Toggles the selection of a language
+			 * @param language {string} The language to toggle
+			 */
+			ctrl.toggleLanguageSelection = function toggleSelection(language) {
+				var idx = ctrl.formData.languages.indexOf(language);
+
+				// Is currently selected
+				if (idx > -1) {
+					ctrl.formData.languages.splice(idx, 1);
+				}
+
+				// Is newly selected
+				else {
+					ctrl.formData.languages.push(language);
+				}
+			};
 
             ctrl.numberOfPages=function(){
                 return Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize);                
@@ -1417,7 +1439,9 @@ angular.module('mwFormBuilder')
     .constant('MW_QUESTION_TYPES', ['text', 'textarea', 'radio', 'checkbox', 'select', 'grid', 'priority', 'division', 'number', 'date', 'time', 'email', 'range', 'url'])
     .constant('MW_ELEMENT_TYPES', ['question', 'image', 'paragraph'])
     .constant('MW_GRID_CELL_INPUT_TYPES', ['radio', 'checkbox', 'text', 'number', 'date', 'time'])
-    .factory('mwFormBuilderOptions', ["MW_ELEMENT_TYPES", "MW_QUESTION_TYPES", function mwFormBuilderOptionsFactory(MW_ELEMENT_TYPES, MW_QUESTION_TYPES){
+    // Languages that are offered to create the survey in
+    .constant('MW_QUESTION_LANGUAGES', ['en', 'af'])
+    .factory('mwFormBuilderOptions', ["MW_ELEMENT_TYPES", "MW_QUESTION_TYPES", "MW_QUESTION_LANGUAGES", function mwFormBuilderOptionsFactory(MW_ELEMENT_TYPES, MW_QUESTION_TYPES, MW_QUESTION_LANGUAGES){
 
         var defaultElementButtonOptions={
             title: null,
@@ -1440,6 +1464,10 @@ angular.module('mwFormBuilder')
         var defaultOptions={
             elementTypes: MW_ELEMENT_TYPES,
             questionTypes: MW_QUESTION_TYPES,
+            // Languages offered for which the survey can be created
+            surveyLanguages : MW_QUESTION_LANGUAGES,
+            // The default language selected for the survey
+            surveyLanguage : MW_QUESTION_LANGUAGES[0],
             elementButtons: [],
             pagesSize: [10,25,50,100],
             pageSize: 10,
@@ -1462,7 +1490,6 @@ angular.module('mwFormBuilder')
                 angular.extend(options, defaultOptions, customOptions);
                 options.customQuestionSelects = extendOptionList(options.customQuestionSelects, defaultCustomQuestionSelectOptions);
                 options.elementButtons = extendOptionList(options.elementButtons, defaultElementButtonOptions);
-
                 return options;
             }
         };

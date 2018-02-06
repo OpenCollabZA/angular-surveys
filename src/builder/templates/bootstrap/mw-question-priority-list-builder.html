@@ -1,13 +1,16 @@
 <div class="mw-question-priority-list-builder">
-    <div class="question-priority-list" ng-sortable="ctrl.itemsSortableConfig" ng-model="ctrl.question.priorityList" role="list">
-        <div class="mw-question-priority-list-item" ng-repeat="item in ctrl.question.priorityList" role="listitem">
-            <div class="drag-handle" ng-if="!ctrl.readOnly">
-                <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+    <div ng-repeat="lang in ctrl.formObject.languages">
+        <div class="question-priority-list" ng-sortable="ctrl.itemsSortableConfig" ng-model="ctrl.question.priorityList" role="list" >
+            <small>({{'mwForm.languages.' + lang | translate}}}</small>
+            <div class="mw-question-priority-list-item" ng-repeat="item in ctrl.question.priorityList" role="listitem">
+                <div class="drag-handle" ng-if="!ctrl.readOnly">
+                    <i class="fa fa-arrows-v fa-lg handle-inner"></i>
+                </div>
+                <input wd-focus-me="ctrl.isNewItem[item.id]" type="text" ng-model="item.value[lang]" ng-keypress="ctrl.keyPressedOnInput($event,item)" required class="form-control item-value " ng-readonly="ctrl.readOnly">
+                <button role="button" class="remove-item-button" ng-click="ctrl.removeItem(item)" ng-if="!ctrl.readOnly"><i class="fa fa-times"></i></button>
             </div>
-            <input wd-focus-me="ctrl.isNewItem[item.id]" type="text" ng-model="item.value" ng-keypress="ctrl.keyPressedOnInput($event,item)" required class="form-control item-value " ng-readonly="ctrl.readOnly">
-            <button role="button" class="remove-item-button" ng-click="ctrl.removeItem(item)" ng-if="!ctrl.readOnly"><i class="fa fa-times"></i></button>
-        </div>
 
+        </div>
     </div>
     <div class="mw-question-priority-list-item add-new-item-widget" ng-if="!ctrl.readOnly">
         <div class="drag-handle">

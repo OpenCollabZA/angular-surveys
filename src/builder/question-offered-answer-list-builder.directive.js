@@ -68,7 +68,7 @@ angular.module('mwFormBuilder').directive('mwQuestionOfferedAnswerListBuilder', 
                 var answer = {
                     id: mwFormUuid.get(),
                     orderNo: ctrl.question.offeredAnswers.length + 1,
-                    value: null,
+                    value: {},
                     pageFlow:defaultPageFlow
                 };
                 ctrl.isNewAnswer[answer.id]=true;

@@ -29,6 +29,9 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($rootScope)
 
                 ctrl.options = mwFormBuilderOptions.$init(ctrl.options);
 
+                //  Set the default language for the survey
+				// ctrl.formData.languages = [ctrl.options.surveyLanguage];
+
                 if(ctrl.api){
                     ctrl.api.reset = function(){
                         for (var prop in ctrl.formData) {
@@ -43,7 +46,25 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($rootScope)
                     }
                 }
             };
-            
+
+
+			/**
+             * Toggles the selection of a language
+			 * @param language {string} The language to toggle
+			 */
+			ctrl.toggleLanguageSelection = function toggleSelection(language) {
+				var idx = ctrl.formData.languages.indexOf(language);
+
+				// Is currently selected
+				if (idx > -1) {
+					ctrl.formData.languages.splice(idx, 1);
+				}
+
+				// Is newly selected
+				else {
+					ctrl.formData.languages.push(language);
+				}
+			};
 
             ctrl.numberOfPages=function(){
                 return Math.ceil(ctrl.formData.pages.length/ctrl.options.pageSize);                

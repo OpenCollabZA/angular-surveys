@@ -8,6 +8,7 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
         scope: {
             question: '=',
             readOnly: '=?',
+			formObject: '=',
             options: '=?'
         },
         templateUrl: 'mw-question-priority-list-builder.html',
@@ -42,7 +43,7 @@ angular.module('mwFormBuilder').directive('mwQuestionPriorityListBuilder', funct
                 var item = {
                     id: mwFormUuid.get(),
                     orderNo: ctrl.question.priorityList.length + 1,
-                    value: null
+                    value: {}
                 };
                 if(!noFocus){
                     ctrl.isNewItem[item.id]=true;

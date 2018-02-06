@@ -1,9 +1,14 @@
 {
     "mwForm":{
+        "languages" : {
+            "en" : "English",
+            "af" : "Afrikaans"
+        },
         "form":{
             "name": "Form name",
             "name.placeholder": "Form title",
-            "description": "Description"
+            "description": "Description",
+            "languages": "Languages"
         },
         "buttons":{
             "addPage":"Add page",
