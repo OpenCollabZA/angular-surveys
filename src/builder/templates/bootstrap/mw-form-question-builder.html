@@ -88,10 +88,10 @@
                     </div>
                 </div>
                 <div class="col-sm-12" ng-if="ctrl.question.type=='grid'">
-                    <mw-question-grid-builder question="ctrl.question" read-only="ctrl.readOnly"></mw-question-grid-builder>
+                    <mw-question-grid-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-grid-builder>
                 </div>
                 <div class="col-sm-12" ng-if="ctrl.question.type=='division'">
-                    <mw-question-division-builder question="ctrl.question" read-only="ctrl.readOnly"></mw-question-division-builder>
+                    <mw-question-division-builder question="ctrl.question" form-object="ctrl.formObject" read-only="ctrl.readOnly"></mw-question-division-builder>
                 </div>
             </div>
 
