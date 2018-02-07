@@ -9,7 +9,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope) {
             responseData: '=',
             templateData: '=?',
             readOnly: '=?',
-            options: '=?',
+            options: '=',
             formStatus: '=?', //wrapper for internal angular form object
             onSubmit: '&',
             api: '=?'
@@ -26,7 +26,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', function ($rootScope) {
                 ctrl.defaultOptions = {
                     nestedForm: false,
                     autoStart: false,
-                    disableSubmit: false
+                    disableSubmit: false,
+                    language : ctrl.formData.languages[0]
                 };
                 ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
 

@@ -10,7 +10,7 @@ angular.module('mwFormViewer')
             question: '=',
             questionResponse: '=',
             readOnly: '=?',
-            options: '=?'
+            options: '='
         },
         templateUrl: 'mw-priority-list.html',
         controllerAs: 'ctrl',

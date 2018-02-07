@@ -1,7 +1,6 @@
 <div class="mw-form-question">
-
     <div class="mw-question-text">
-        {{::ctrl.print(ctrl.question.text)}} <span ng-if="ctrl.question.required">*</span>
+        {{::ctrl.print(ctrl.question.text[ctrl.options.language])}} <span ng-if="ctrl.question.required">*</span>
     </div>
 
     <div class="mw-question-answers" ng-switch="ctrl.question.type">
@@ -15,7 +14,7 @@
             <div class="radio" ng-repeat="answer in ctrl.question.offeredAnswers">
                 <label>
                     <input type="radio" ng-model="ctrl.questionResponse.selectedAnswer" ng-value="answer.id" name="answer-for-question-{{ctrl.question.id}}" ng-change="ctrl.selectedAnswerChanged()" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer" ng-disabled="ctrl.readOnly">
-                    {{::ctrl.print(answer.value)}}
+                    {{::ctrl.print(answer.value[ctrl.options.language])}}
                 </label>
             </div>
             <div class="radio" ng-if="ctrl.question.otherAnswer">
@@ -33,7 +32,7 @@
             <div class="checkbox" ng-repeat="answer in ::ctrl.question.offeredAnswers">
                 <label>
                     <input type="checkbox" name="answer-for-question-{{ctrl.question.id}}" ng-checked="ctrl.questionResponse.selectedAnswers.indexOf(answer.id) != -1" ng-click="ctrl.toggleSelectedAnswer(answer)" ng-disabled="ctrl.readOnly">
-                    {{::ctrl.print(answer.value)}}
+                    {{::ctrl.print(answer.value[ctrl.options.language])}}
                 </label>
             </div>
             <div class="checkbox"  ng-if="ctrl.question.otherAnswer">
@@ -48,7 +47,7 @@
             <input type="hidden" ng-model="ctrl.selectedAnswer" ng-required="ctrl.question.required &&!ctrl.isOtherAnswer"/>
         </div>
         <div ng-switch-when="select">
-            <select ng-options="answer.id as ctrl.print(answer.value) for answer in ::ctrl.question.offeredAnswers" ng-model="ctrl.questionResponse.selectedAnswer" class="form-control"  ng-disabled="ctrl.readOnly" ng-required="ctrl.question.required"></select>
+            <select ng-options="answer.id as ctrl.print(answer.value[ctrl.options.language]) for answer in ::ctrl.question.offeredAnswers" ng-model="ctrl.questionResponse.selectedAnswer" class="form-control"  ng-disabled="ctrl.readOnly" ng-required="ctrl.question.required"></select>
         </div>
         <div ng-switch-when="grid">
             <div class="table-responsive">
@@ -57,7 +56,7 @@
                     <tr>
                         <td></td>
                         <td ng-repeat="col in ::ctrl.question.grid.cols">
-                            <label>{{::ctrl.print(col.label)}}</label>
+                            <label>{{::ctrl.print(col.label[ctrl.options.language])}}</label>
                         </td>
                     </tr>
 
@@ -65,7 +64,7 @@
                     <tbody>
                     <tr ng-repeat="row in ::ctrl.question.grid.rows">
                         <td>
-                            {{::ctrl.print(row.label)}}
+                            {{::ctrl.print(row.label[ctrl.options.language])}}
                         </td>
                         <td ng-repeat="col in ::ctrl.question.grid.cols" ng-switch="ctrl.question.grid.cellInputType">
                             <input ng-switch-when="radio"  type="radio" ng-model="ctrl.questionResponse[row.id]" ng-value="col.id" name="answer-for-question-{{row.id}}" ng-required="ctrl.question.required" ng-disabled="ctrl.readOnly">
@@ -83,7 +82,7 @@
             <div class="form-inline" style="margin-bottom: 5px" ng-repeat="item in ctrl.question.divisionList">
                 <div class="form-group">
                     <label>
-                        {{::ctrl.print(item.value)}}
+                        {{::ctrl.print(item.value[ctrl.options.language])}}
                     </label>
                     <input type="number" class="form-control" ng-model="ctrl.questionResponse[item.id]" min="0" max="{{ctrl.question.quantity}}" required style="width: 80px" ng-change="ctrl.computeDivisionSum()" ng-readonly="ctrl.readOnly">
                     <span>{{::ctrl.print(ctrl.question.unit)}}</span>
@@ -103,7 +102,7 @@
 
         </div>
 
-        <mw-priority-list ng-switch-when="priority" question-response="ctrl.questionResponse" question="ctrl.question" read-only="ctrl.readOnly"></mw-priority-list>
+        <mw-priority-list ng-switch-when="priority" options="ctrl.options" question-response="ctrl.questionResponse" question="ctrl.question" read-only="ctrl.readOnly"></mw-priority-list>
 
         <div ng-switch-when="number" class="form-inline">
             <input class="form-control" min="{{ctrl.question.min}}" max="{{ctrl.question.max}}"  type="number" ng-model="ctrl.questionResponse.answer" ng-required="ctrl.question.required" ng-readonly="ctrl.readOnly">

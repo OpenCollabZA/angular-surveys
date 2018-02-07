@@ -458,6 +458,7 @@ angular.module('mwFormBuilder').directive('mwQuestionDivisionBuilder', function 
         require: '^mwFormQuestionBuilder',
         scope: {
             question: '=',
+			formObject: '=',
             readOnly: '=?',
             options: '=?'
         },

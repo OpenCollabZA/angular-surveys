@@ -14,7 +14,7 @@ angular.module('mwFormViewer')
             question: '=',
             questionResponse: '=',
             readOnly: '=?',
-            options: '=?'
+            options: '='
         },
         templateUrl: 'mw-priority-list.html',
         controllerAs: 'ctrl',
@@ -124,7 +124,7 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
             responseData: '=',
             templateData: '=?',
             readOnly: '=?',
-            options: '=?',
+            options: '=',
             formStatus: '=?', //wrapper for internal angular form object
             onSubmit: '&',
             api: '=?'
@@ -141,7 +141,8 @@ angular.module('mwFormViewer').directive('mwFormViewer', ["$rootScope", function
                 ctrl.defaultOptions = {
                     nestedForm: false,
                     autoStart: false,
-                    disableSubmit: false
+                    disableSubmit: false,
+                    language : ctrl.formData.languages[0]
                 };
                 ctrl.options = angular.extend({}, ctrl.defaultOptions, ctrl.options);
 

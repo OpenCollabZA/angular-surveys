@@ -27,7 +27,8 @@ angular.module('app', ['ui.bootstrap', 'mwFormBuilder', 'mwFormViewer', 'mwFormU
         ctrl.formViewer = {};
         ctrl.formOptions = {
             autoStart: false,
-            disableSubmit: false
+            disableSubmit: false,
+            language : null
         };
         ctrl.selectedTabIndex=0;
         ctrl.optionsBuilder={
@@ -81,6 +82,7 @@ angular.module('app', ['ui.bootstrap', 'mwFormBuilder', 'mwFormViewer', 'mwFormU
             ctrl.selectedTabIndex=index;
             if(index===1){
                 ctrl.resetViewer();
+                ctrl.formOptions.language = ctrl.formOptions.language || ctrl.formData.languages[0];
             }
         };
 
