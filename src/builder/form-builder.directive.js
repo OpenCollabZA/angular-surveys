@@ -53,6 +53,10 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', function ($rootScope)
 			 * @param language {string} The language to toggle
 			 */
 			ctrl.toggleLanguageSelection = function toggleSelection(language) {
+
+			    if(ctrl.formData.languages == null){
+              ctrl.formData.languages = [];
+          }
 				var idx = ctrl.formData.languages.indexOf(language);
 
 				// Is currently selected

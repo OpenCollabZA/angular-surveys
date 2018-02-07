@@ -12,7 +12,10 @@
     {
       "id": "16062797c1e9a92a9dbaae5e9ce17d6c",
       "number": 1,
-      "name": null,
+      "name": {
+        "en" : "Name of the page",
+        "af" : "Naam van die bladsy"
+      },
       "description": null,
       "pageFlow": {
         "nextPage": true,

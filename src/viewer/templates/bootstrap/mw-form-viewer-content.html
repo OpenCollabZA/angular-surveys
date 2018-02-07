@@ -10,7 +10,7 @@
             <button type="button"  class="btn btn-default begin-response-button" ng-click="ctrl.beginResponse()" translate="mwForm.buttons.begin">Rozpocznij</button>
                 <span ng-show="ctrl.formData.languages.length > 0">Language</span>
                 <select ng-show="ctrl.formData.languages.length > 0" ng-model="ctrl.options.language" class="form-control" style="display: inline; width: auto; margin-left: 10px">
-                    <option ng-repeat="lang in ctrl.formData.languages" ng-value="lang">{{lang}}</option>
+                    <option ng-repeat="lang in ctrl.formData.languages" ng-value="lang">{{'mwForm.languages.' + lang | translate}}</option>
                 </select>
             </div>
         </div>

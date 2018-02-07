@@ -1239,6 +1239,10 @@ angular.module('mwFormBuilder').directive('mwFormBuilder', ["$rootScope", functi
 			 * @param language {string} The language to toggle
 			 */
 			ctrl.toggleLanguageSelection = function toggleSelection(language) {
+
+			    if(ctrl.formData.languages == null){
+              ctrl.formData.languages = [];
+          }
 				var idx = ctrl.formData.languages.indexOf(language);
 
 				// Is currently selected
@@ -1436,6 +1440,7 @@ angular.module('mwFormBuilder').filter('mwStartFrom', function() {
         return input.slice(start);
     };
 });
+
 angular.module('mwFormBuilder')
     .constant('MW_QUESTION_TYPES', ['text', 'textarea', 'radio', 'checkbox', 'select', 'grid', 'priority', 'division', 'number', 'date', 'time', 'email', 'range', 'url'])
     .constant('MW_ELEMENT_TYPES', ['question', 'image', 'paragraph'])
